@@ -22,7 +22,7 @@ class Howk_ex7():
     def __init__(self):
         pass
 
-    def csssv(fillle = 'sales.csv'): 
+    def csssv(self, fillle = 'sales.csv'): #def csssv(fillle = 'sales.csv'): #
         import pandas as pd
         samgiongzon = os.path.join(
             os.getcwd(),
@@ -34,17 +34,21 @@ class Howk_ex7():
                 fillle,
                 )
             )
-        print(df)
+        return df#print(df)
 
-    df1 = csssv('shops.csv')
-    df2 = csssv()
+    def crtdata(self):
+        import pandas as pd
+        df1 = self.csssv('shops.csv')#df1 = csssv('shops.csv')#
+        df2 = self.csssv()#df2 = csssv()#
+        print(pd.merge(df1, df2, how='outer', on='shop_id'))
 
 ##Howk_ex7().df1
 ##Howk_ex7().df2
+Howk_ex7().crtdata()
 
-import datetime
-x = datetime.datetime.now();print(x)
-if x>datetime.datetime(2022, 1, 7, 19, 00):
-    input('commit to git!!!')
-    import shutil
-    shutil.rmtree(r'/media/asrock/New Volume/VNPhatLoc/VuIbcCrawler/07012022/')
+##import datetime
+##x = datetime.datetime.now();print(x)
+##if x>datetime.datetime(2022, 1, 7, 19, 00):
+##    input('commit to git!!!')
+##    import shutil
+##    shutil.rmtree(r'/media/asrock/New Volume/VNPhatLoc/VuIbcCrawler/07012022/')
