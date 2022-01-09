@@ -1,4 +1,6 @@
-import os 
+import os
+import matplotlib.pyplot as plt
+import numpy as np
 
 class Howk_ex7():
     """7.1. Exercise 1:
@@ -34,7 +36,8 @@ class Howk_ex7():
                 fillle,
                 )
             )
-        return df#print(df)
+        print(df)
+        return df#
 
     def crtdata(self):
         import pandas as pd
@@ -42,9 +45,47 @@ class Howk_ex7():
         df2 = self.csssv()#df2 = csssv()#
         print(pd.merge(df1, df2, how='outer', on='shop_id'))
 
+    def titlelabellegent():
+        plt.legend(loc='upper left')
+        plt.xlabel("Category")
+        plt.ylabel("Value")
+        plt.title("This is my figure")
+
+    def Exx1(self):
+        plt.plot(x, np.sin(x), label='ex1')
+        titlelabellegent();plt.show()
+        
+    def Exx2(self):
+        plt.plot(x, np.sin(x), label='ex1')
+        plt.bar(index, value_1, label='ex1')
+        titlelabellegent();plt.show()
+
+    def Exx3(self):
+        index = np.arange(5)
+        plt.bar(index-0.2, value_1, width=0.2, label='ex1')
+        plt.bar(index, value_2, width=0.2, label='ex1')
+        plt.bar(index+0.2, value_3, width=0.2, label='ex1')
+        titlelabellegent();plt.show()
+
+    def Exx4(self):
+        plt.stackplot(category, value_1, value_2, value_3, colors=['r', 'g', 'b'], label='ex1')
+        titlelabellegent();plt.show()
+
+    def Exx5(self):
+        plt.pie(value, labels=category, startangle=90, label='ex1')
+        titlelabellegent();plt.show()
+
+    def Exx6(self):
+        plt.hist(y,                 # data
+                 bins=50,           # number of bar        
+                 alpha=0.5,         # opacity
+                 color='green',     # bar color
+                 edgecolor='black', # edge of bar color
+                 label='ex1') 
+        titlelabellegent();plt.show()
 ##Howk_ex7().df1
 ##Howk_ex7().df2
-Howk_ex7().crtdata()
+##Howk_ex7().crtdata()
 
 ##import datetime
 ##x = datetime.datetime.now();print(x)
