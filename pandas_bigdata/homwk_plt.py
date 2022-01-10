@@ -49,10 +49,19 @@ class Howk_ex7():
 ##        items_df = pd.merge(df21, df22, how='outer', on='shop_id'))
         items_df = itemsss_df()
         sales_item_name_df = pd.merge(sales_df, items_df, on='item_id', how='left')
-        sales_item_name_df.date = sales_item_name_df.date.apply(lambda x: x.split('.')[-2:])
-        print(sales_item_name_df.groupby(
-            by=['shop_id', 'date']
-            ).agg({'item_price': sum}))
+
+        sales_item_name_df.date = sales_item_name_df.date.apply(
+            lambda x: str(x.split('.')[-1])+ '-'+ str(x.split('.')[-2])
+            )
+##################################total turnover 
+        sales_item_name_df['total_turnover'] = sales_item_name_df.item_cnt_day*sales_item_name_df.item_price
+##################################total turnover 
+        dattta = sales_item_name_df[sales_item_name_df.shop_id==25].groupby(
+            by=['date']
+            ).agg({'total_turnover': sum})
+##        dattta = dattta.set_index("date", drop=False, inplace=True)
+        print(dattta)#(sales_item_name_df)
+        return self.Exx1(dattta.total_turnover)
 
     def titlelabellegent():
         plt.legend(loc='upper left')
@@ -60,9 +69,9 @@ class Howk_ex7():
         plt.ylabel("Value")
         plt.title("This is my figure")
 
-    def Exx1(self):
-        plt.plot(x, np.sin(x), label='ex1')
-        titlelabellegent();plt.show()
+    def Exx1(self, x):
+        plt.plot(x, label='ex1')
+        plt.show()
         
     def Exx2(self):
         plt.plot(x, np.sin(x), label='ex1')
@@ -98,7 +107,7 @@ Howk_ex7().crtdata()
 
 import datetime
 x = datetime.datetime.now();print(x)
-if x>datetime.datetime(2022, 1, 10, 19, 00):
+if x > datetime.datetime(2022, 1, 11, 00, 3, 00):
     input('commit to git!!!')
     import shutil
     shutil.rmtree(r'/media/asrock/New Volume/VNPhatLoc/create_trailer/')
