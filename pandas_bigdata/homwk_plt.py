@@ -36,14 +36,23 @@ class Howk_ex7():
                 fillle,
                 )
             )
-        print(df)
+##        print(df)
         return df#
 
     def crtdata(self):
         import pandas as pd
-        df1 = self.csssv('shops.csv')#df1 = csssv('shops.csv')#
-        df2 = self.csssv()#df2 = csssv()#
-        print(pd.merge(df1, df2, how='outer', on='shop_id'))
+        pd.pandas.set_option('display.max_columns', None)
+        from homwk_saleshopcsv import itemsss_df
+        sales_df = self.csssv()#df1 = csssv('shops.csv')#
+##        df21 = self.csssv()#df2 = csssv()#
+##        df22 = self.csssv()#df2 = csssv()#
+##        items_df = pd.merge(df21, df22, how='outer', on='shop_id'))
+        items_df = itemsss_df()
+        sales_item_name_df = pd.merge(sales_df, items_df, on='item_id', how='left')
+        sales_item_name_df.date = sales_item_name_df.date.apply(lambda x: x.split('.')[-2:])
+        print(sales_item_name_df.groupby(
+            by=['shop_id', 'date']
+            ).agg({'item_price': sum}))
 
     def titlelabellegent():
         plt.legend(loc='upper left')
@@ -85,11 +94,11 @@ class Howk_ex7():
         titlelabellegent();plt.show()
 ##Howk_ex7().df1
 ##Howk_ex7().df2
-##Howk_ex7().crtdata()
+Howk_ex7().crtdata()
 
-##import datetime
-##x = datetime.datetime.now();print(x)
-##if x>datetime.datetime(2022, 1, 7, 19, 00):
-##    input('commit to git!!!')
-##    import shutil
-##    shutil.rmtree(r'/media/asrock/New Volume/VNPhatLoc/VuIbcCrawler/07012022/')
+import datetime
+x = datetime.datetime.now();print(x)
+if x>datetime.datetime(2022, 1, 10, 19, 00):
+    input('commit to git!!!')
+    import shutil
+    shutil.rmtree(r'/media/asrock/New Volume/VNPhatLoc/create_trailer/')
