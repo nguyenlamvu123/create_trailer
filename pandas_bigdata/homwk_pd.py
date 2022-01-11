@@ -1,3 +1,24 @@
+class samgiongzon():
+    def __init__(self):
+        self.nam = 0
+        pass 
+    def so3():
+        return 3
+    def so5(self):
+        return 5
+    def so8(self):
+        return self.so5()+3
+    ba = so3()
+    print(ba)
+##    nam = so5(self)#name 'self' is not defined
+##    nam = self.so5()#name 'self' is not defined
+
+samgiongzon = samgiongzon()
+print(samgiongzon.nam)
+##print(samgiongzon.ba)
+print(samgiongzon.so8())
+####print(samgiongzon.so3())#so3() takes 0 positional arguments but 1 was given
+
 import pandas as pd
 
 class Baitapbuoi4:

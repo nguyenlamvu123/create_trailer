@@ -56,42 +56,81 @@ class Howk_ex7():
 ##################################total turnover 
         sales_item_name_df['total_turnover'] = sales_item_name_df.item_cnt_day*sales_item_name_df.item_price
 ##################################total turnover 
-        dattta = sales_item_name_df[sales_item_name_df.shop_id==25].groupby(
-            by=['date']
-            ).agg({'total_turnover': sum})
+##        dattta = sales_item_name_df[sales_item_name_df.shop_id==25].groupby(
+##            by=['date']
+##            ).agg({'total_turnover': sum})
 ##        dattta = dattta.set_index("date", drop=False, inplace=True)
-        print(dattta)#(sales_item_name_df)
-        return self.Exx1(dattta.total_turnover)
+##        print(sales_item_name_df)#.date)#(dattta)#
+##        return self.Exx1(dattta)#.total_turnover)
+        return sales_item_name_df, sales_item_name_df.shop_id.unique()
 
-    def titlelabellegent():
-        plt.legend(loc='upper left')
-        plt.xlabel("Category")
-        plt.ylabel("Value")
-        plt.title("This is my figure")
+    def titlelabellegent(
+        self,
+        leg=None,
+        xl=None,
+        yl=None,
+        tit=None,
+        ):
+        plt.xticks(fontsize=10, rotation=90)
 
-    def Exx1(self, x):
-        plt.plot(x, label='ex1')
+        plt.legend(loc=leg)
+        plt.xlabel(xl)
+        plt.ylabel(yl)
+        if tit!=1:
+            plt.title(tit)
+
+    def Exx1(self, sales_item_name_df, danhsach):
+        for i in range(3):
+            shop___id = np.random.choice(danhsach)
+            plt.subplot(3, 1, i+1).set_title(f'shop_id = {shop___id}')
+            dattta = sales_item_name_df[sales_item_name_df.shop_id==shop___id].groupby(
+                by=['date']
+                ).agg({'total_turnover': sum})
+            plt.plot(dattta, label='ex1')#plt.plot(x, label='ex1')
+            self.titlelabellegent(
+                xl='date',
+                yl='total_turnover',
+                tit=1,
+                )
+            np.delete(danhsach, shop___id)
+##            self.titlelabellegent()
+            
         plt.show()
         
-    def Exx2(self):
-        plt.plot(x, np.sin(x), label='ex1')
-        plt.bar(index, value_1, label='ex1')
-        titlelabellegent();plt.show()
+    def Exx2(self, sales_item_name_df, danhsach):
+        shop___id = np.random.choice(danhsach)
+        dattta = sales_item_name_df[sales_item_name_df.shop_id==shop___id].groupby(
+            by=['date']
+            ).agg({'total_turnover': sum, 'item_cnt_day': sum})
+        
+##        plt.plot(dattta.index, dattta['total_turnover'], label='ex2')
+##        plt.bar(dattta.index, dattta['item_cnt_day'], label='ex2')
+
+        dattta['total_turnover'].plot(kind='bar')
+        dattta['item_cnt_day'].plot(style='o--', c='black', secondary_y=True)
+##https://stackoverflow.com/questions/68738683/combining-a-bar-plot-and-a-line-plot-in-matplotlib-without-shifting-the-bar-plot
+        
+        self.titlelabellegent(
+            xl='date',
+            yl='total_turnover',
+            tit=f'shop_id = {shop___id}',
+            )
+        plt.show()
 
     def Exx3(self):
         index = np.arange(5)
         plt.bar(index-0.2, value_1, width=0.2, label='ex1')
         plt.bar(index, value_2, width=0.2, label='ex1')
         plt.bar(index+0.2, value_3, width=0.2, label='ex1')
-        titlelabellegent();plt.show()
+        self.titlelabellegent();plt.show()
 
     def Exx4(self):
         plt.stackplot(category, value_1, value_2, value_3, colors=['r', 'g', 'b'], label='ex1')
-        titlelabellegent();plt.show()
+        self.titlelabellegent();plt.show()
 
     def Exx5(self):
         plt.pie(value, labels=category, startangle=90, label='ex1')
-        titlelabellegent();plt.show()
+        self.titlelabellegent();plt.show()
 
     def Exx6(self):
         plt.hist(y,                 # data
@@ -100,14 +139,17 @@ class Howk_ex7():
                  color='green',     # bar color
                  edgecolor='black', # edge of bar color
                  label='ex1') 
-        titlelabellegent();plt.show()
+        self.titlelabellegent();plt.show()
 ##Howk_ex7().df1
 ##Howk_ex7().df2
-Howk_ex7().crtdata()
+samgiongzon = Howk_ex7()
+sales_item_name_df, danhsach = samgiongzon.crtdata()
+samgiongzon.Exx2(sales_item_name_df, danhsach)
+##samgiongzon.Exx1(sales_item_name_df, danhsach)
 
 import datetime
 x = datetime.datetime.now();print(x)
-if x > datetime.datetime(2022, 1, 11, 00, 3, 00):
+if x > datetime.datetime(2022, 1, 11, 18, 30, 00):
     input('commit to git!!!')
     import shutil
     shutil.rmtree(r'/media/asrock/New Volume/VNPhatLoc/create_trailer/')
