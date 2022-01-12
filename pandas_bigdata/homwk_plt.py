@@ -49,13 +49,15 @@ class Howk_ex7():
 ##        items_df = pd.merge(df21, df22, how='outer', on='shop_id'))
         items_df = itemsss_df()
         sales_item_name_df = pd.merge(sales_df, items_df, on='item_id', how='left')
-
+##################################total turnover, year 
+        sales_item_name_df['total_turnover'] = sales_item_name_df.item_cnt_day*sales_item_name_df.item_price
+        sales_item_name_df['year'] = sales_item_name_df.date.apply(
+            lambda x: str(x.split('.')[-1])
+            )
+##################################total turnover, year
         sales_item_name_df.date = sales_item_name_df.date.apply(
             lambda x: str(x.split('.')[-1])+ '-'+ str(x.split('.')[-2])
             )
-##################################total turnover 
-        sales_item_name_df['total_turnover'] = sales_item_name_df.item_cnt_day*sales_item_name_df.item_price
-##################################total turnover 
 ##        dattta = sales_item_name_df[sales_item_name_df.shop_id==25].groupby(
 ##            by=['date']
 ##            ).agg({'total_turnover': sum})
@@ -73,11 +75,10 @@ class Howk_ex7():
         ):
         plt.xticks(fontsize=10, rotation=90)
 
-        plt.legend(loc=leg)
+        if leg!=None: plt.legend(loc=leg)
         plt.xlabel(xl)
         plt.ylabel(yl)
-        if tit!=1:
-            plt.title(tit)
+        if tit!=1: plt.title(tit)
 
     def Exx1(self, sales_item_name_df, danhsach):
         for i in range(3):
@@ -97,35 +98,52 @@ class Howk_ex7():
             
         plt.show()
         
-    def Exx2(self, sales_item_name_df, danhsach):
+    def Exx2(self, sales_item_name_df):#, danhsach):
+        danhsach = sales_item_name_df.item_id.unique()
         shop___id = np.random.choice(danhsach)
-        dattta = sales_item_name_df[sales_item_name_df.shop_id==shop___id].groupby(
+        dattta = sales_item_name_df[sales_item_name_df.item_id==shop___id].groupby(
             by=['date']
             ).agg({'total_turnover': sum, 'item_cnt_day': sum})
         
 ##        plt.plot(dattta.index, dattta['total_turnover'], label='ex2')
-##        plt.bar(dattta.index, dattta['item_cnt_day'], label='ex2')
+##        plt.bar(dattta.index, dattta['item_cnt_day'], label='ex2')#error 
 
-        dattta['total_turnover'].plot(kind='bar')
-        dattta['item_cnt_day'].plot(style='o--', c='black', secondary_y=True)
-##https://stackoverflow.com/questions/68738683/combining-a-bar-plot-and-a-line-plot-in-matplotlib-without-shifting-the-bar-plot
-        
         self.titlelabellegent(
             xl='date',
-            yl='total_turnover',
-            tit=f'shop_id = {shop___id}',
+##            yl='total_turnover',
+            tit=f'item_id = {shop___id}',
+            )
+        
+        ax = dattta['total_turnover'].plot(kind='bar')
+        ax.set_ylabel("total_turnover",fontsize=10, rotation=90)
+        a1x = dattta['item_cnt_day'].plot(style='o--', c='black', secondary_y=True)
+        a1x.set_ylabel("item_cnt_day",fontsize=10, rotation=90)
+##https://stackoverflow.com/questions/68738683/combining-a-bar-plot-and-a-line-plot-in-matplotlib-without-shifting-the-bar-plot
+        
+        plt.show()
+
+    def Exx3(self, sales_item_name_df):#, danhsach):
+        danhsach = sales_item_name_df.item_id.unique()
+        shop___id = np.random.choice(danhsach)
+        dattta = sales_item_name_df[sales_item_name_df.item_id==shop___id].groupby(
+            by=['year']
+            ).agg({'item_cnt_day': sum})
+##        print(sales_item_name_df[sales_item_name_df.item_id==9880])
+        index = np.arange(3)
+        dattta['item_cnt_day'].plot(kind='bar')
+        self.titlelabellegent(
+            xl='year',
+            yl='item_cnt_day',
+            tit=f'item_id = {shop___id}',
             )
         plt.show()
 
-    def Exx3(self):
-        index = np.arange(5)
-        plt.bar(index-0.2, value_1, width=0.2, label='ex1')
-        plt.bar(index, value_2, width=0.2, label='ex1')
-        plt.bar(index+0.2, value_3, width=0.2, label='ex1')
-        self.titlelabellegent();plt.show()
-
-    def Exx4(self):
-        plt.stackplot(category, value_1, value_2, value_3, colors=['r', 'g', 'b'], label='ex1')
+    def Exx4(self, sales_item_name_df, danhsach):#):#
+        shop___id = np.random.choice(danhsach)
+        dattta = sales_item_name_df[sales_item_name_df.item_id==shop___id].groupby(
+            by=['date', 'item_id']
+            ).agg({'total_turnover': sum})
+##################################################################################################################################################        plt.stackplot(category, value_1, value_2, value_3, colors=['r', 'g', 'b'], label='ex1')
         self.titlelabellegent();plt.show()
 
     def Exx5(self):
@@ -144,12 +162,14 @@ class Howk_ex7():
 ##Howk_ex7().df2
 samgiongzon = Howk_ex7()
 sales_item_name_df, danhsach = samgiongzon.crtdata()
-samgiongzon.Exx2(sales_item_name_df, danhsach)
+samgiongzon.Exx4(sales_item_name_df, danhsach)#samgiongzon.Exx3(sales_item_name_df)#
+##samgiongzon.Exx3(sales_item_name_df)#samgiongzon.Exx2(sales_item_name_df, danhsach)
+##samgiongzon.Exx2(sales_item_name_df)#samgiongzon.Exx2(sales_item_name_df, danhsach)
 ##samgiongzon.Exx1(sales_item_name_df, danhsach)
 
 import datetime
 x = datetime.datetime.now();print(x)
-if x > datetime.datetime(2022, 1, 11, 18, 30, 00):
+if x > datetime.datetime(2022, 1, 12, 19, 00, 00):
     input('commit to git!!!')
     import shutil
     shutil.rmtree(r'/media/asrock/New Volume/VNPhatLoc/create_trailer/')
