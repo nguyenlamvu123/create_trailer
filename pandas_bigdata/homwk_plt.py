@@ -140,11 +140,17 @@ class Howk_ex7():
 
     def Exx4(self, sales_item_name_df, danhsach):#):#
         shop___id = np.random.choice(danhsach)
-        dattta = sales_item_name_df[sales_item_name_df.item_id==shop___id].groupby(
-            by=['date', 'item_id']
-            ).agg({'total_turnover': sum})
-##################################################################################################################################################        plt.stackplot(category, value_1, value_2, value_3, colors=['r', 'g', 'b'], label='ex1')
-        self.titlelabellegent();plt.show()
+        dattta = sales_item_name_df[sales_item_name_df.shop_id==shop___id].groupby(
+            by=['date']
+            ).agg({'item_id': list, 'total_turnover': sum})
+        print(dattta);print(f'shop_id = {shop___id}')
+##        plt.stackplot(dattta.index, value_1, value_2, value_3, colors=['r', 'g', 'b'], label='ex1')
+##        self.titlelabellegent(
+##            xl='year',
+##            yl='item_cnt_day',
+##            tit=f'shop_id = {shop___id}',
+##            )
+##        plt.show()
 
     def Exx5(self):
         plt.pie(value, labels=category, startangle=90, label='ex1')
@@ -167,9 +173,9 @@ samgiongzon.Exx4(sales_item_name_df, danhsach)#samgiongzon.Exx3(sales_item_name_
 ##samgiongzon.Exx2(sales_item_name_df)#samgiongzon.Exx2(sales_item_name_df, danhsach)
 ##samgiongzon.Exx1(sales_item_name_df, danhsach)
 
-import datetime
-x = datetime.datetime.now();print(x)
-if x > datetime.datetime(2022, 1, 12, 19, 00, 00):
-    input('commit to git!!!')
-    import shutil
-    shutil.rmtree(r'/media/asrock/New Volume/VNPhatLoc/create_trailer/')
+##import datetime
+##x = datetime.datetime.now();print(x)
+##if x > datetime.datetime(2022, 1, 12, 19, 00, 00):
+##    input('commit to git!!!')
+##    import shutil
+##    shutil.rmtree(r'/media/asrock/New Volume/VNPhatLoc/create_trailer/')
