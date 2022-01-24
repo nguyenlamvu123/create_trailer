@@ -1,0 +1,18 @@
+azure data studio
+comment: ctrl k, ctrl c
+uncomment: ctrl k, ctrl u
+
+SELECT TOP (1000) [id]
+      ,[user_id]
+      ,[bank_id]
+      ,[note]
+      ,[created_date]
+      ,[updated_date]
+      ,[link]
+      ,[account_number]
+      ,[bank_account_name]
+      ,[bank_password]
+      ,[visible]
+  FROM [Payment].[dbo].[bank_account]
+-- INSERT INTO [Payment].[dbo].[bank_account] (bank_id, account_number, visible) VALUES (13, '03101011762529', 1)
+-- UPDATE [Payment].[dbo].[bank_account] SET user_id=16, note='MSB' WHERE id=14
