@@ -1,0 +1,10 @@
+https://dothanhlong.org/python-nhan-dien-tao-phu-de-tu-dong-cho-video-va-am-thanh-autosub/
+https://developpaper.com/realize-bilingual-subtitle-for-your-movie-based-on-python-3-autosub-and-fmpeg-with-google-translation/
+
+sudo pip install git+https://github.com/agermanidis/autosub.git
+sudo apt-get install ffmpeg -y
+
+nguyên lý hoạt động: tách phần âm thanh của video ra, sau đó upload lên mạng và sử dụng Google Web Speech API để nhận diện, tạo ra phụ đề và cuối cùng là lưu xuống máy tính
+
+autosub [tên_video] -S vi -D vi	
+python autosub_app.py [tên_video] -S vi -D vi#window
