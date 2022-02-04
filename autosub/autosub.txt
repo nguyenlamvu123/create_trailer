@@ -6,5 +6,6 @@ sudo apt-get install ffmpeg -y
 
 nguyên lý hoạt động: tách phần âm thanh của video ra, sau đó upload lên mạng và sử dụng Google Web Speech API để nhận diện, tạo ra phụ đề và cuối cùng là lưu xuống máy tính
 
+youtube-dl YouTube-(or-other-website)-video-link
 autosub [tên_video] -S vi -D vi	
 python autosub_app.py [tên_video] -S vi -D vi#window
