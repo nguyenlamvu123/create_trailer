@@ -13,8 +13,8 @@ ENV DEBIAN_FRONTEND=noninteractive
     
 RUN apt-get update
 RUN apt-get install -y python3-pip python3-dev
-RUN cd /usr/local/bin
-RUN ln -s /usr/bin/python3 python
+#RUN cd /usr/local/bin
+#RUN ln -s /usr/bin/python3 python
 RUN pip3 install --upgrade pip
 
 RUN apt install -y ffmpeg
