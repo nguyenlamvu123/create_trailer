@@ -25,7 +25,8 @@ class XulyanhBangHistogram():
         return histogram
     def histog_(self):
         img = cv2.imread(self.anh, cv2.IMREAD_GRAYSCALE)
-        plt.hist(img.ravel(),256,[0,256]);plt.show()
+        plt.hist(img.ravel(),256,[0,256])
+        return plt.show()
     def histog__(self):
         img = cv2.imread(self.anh, cv2.IMREAD_COLOR)
         color = ('b','g','r')
@@ -33,25 +34,32 @@ class XulyanhBangHistogram():
             histr = cv2.calcHist([img],[i],None,[256],[0,256])
             plt.plot(histr,color = col)
             plt.xlim([0,256])
-        plt.show()
+        return plt.show()
     def equalizeHiiist(self):
         img = cv2.imread(self.anh, cv2.IMREAD_GRAYSCALE)
         equ = cv2.equalizeHist(img)
-        self.plllt(img, equ)
+        return self.plllt(img, equ)
     def equalizeHistEachParrrt(self):
         img = cv2.imread(self.anh, cv2.IMREAD_GRAYSCALE)
         clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8,8))
         equ = clahe.apply(img)
-        self.plllt(img, equ)
+        return self.plllt(img, equ)
     def equalizeHistEachPixcel(self, way='SquareTransfrom'):
         img = cv2.imread(self.anh, cv2.IMREAD_GRAYSCALE)
         equ = img.copy()
         for i in range(img.shape[0]):
             for j in range(img.shape[1]):
-                equ[i][j] = int(np.square(int(equ[i][j]))/255)\
-                            if way=='SquareTransfrom' else\
-                            int(np.sqrt(int(equ[i][j])))#SquareRootTransfrom
-        self.plllt(img, equ)
+##                equ[i][j] = int(np.square(int(equ[i][j]))/255)\
+##                            if way=='SquareTransfrom' else\
+##                            int(np.sqrt(int(equ[i][j])))#SquareRootTransfrom
+                if way=='SquareTransfrom':
+                    equ[i][j] = int(np.square(int(equ[i][j]))/255)
+                elif way=='SquareRootTransfrom':
+                    equ[i][j] = int(np.sqrt(int(equ[i][j])))
+                else:
+                    print('Lỗi: "SquareTransfrom" hoặc "SquareRootTransfrom"')
+                    return None
+        return self.plllt(img, equ)
     def plllt(self, img, equ):
         plt.subplot(2,2,1)
         plt.imshow(img, cmap='gray')
