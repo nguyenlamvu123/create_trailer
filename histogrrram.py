@@ -49,9 +49,6 @@ class XulyanhBangHistogram():
                            way='SquareTransfrom',
                            gamma=5,#0.04-25
                            ):
-        """Với γ<1, các cùng ảnh ban đầu bị tối sẽ được tăng sáng và
-histogram sẽ có xu hướng dịch chuyển sang phải,
-ngược lại với γ>1, ảnh sẽ được giảm sáng."""
         img = cv2.imread(self.anh, cv2.IMREAD_GRAYSCALE)
         equ = img.copy()
         for i in range(img.shape[0]):
@@ -64,6 +61,11 @@ ngược lại với γ>1, ảnh sẽ được giảm sáng."""
                 elif way=='SquareRootTransfrom':
                     equ[i][j] = int(np.sqrt(int(equ[i][j])))
                 elif way=='Gamma_Correction':
+                    print(
+                        """Với γ<1, các cùng ảnh ban đầu bị tối sẽ được tăng sáng và
+histogram sẽ có xu hướng dịch chuyển sang phải,
+ngược lại với γ>1, ảnh sẽ được giảm sáng."""
+                        )
                     equ[i][j] = ((int(img[i][j])/255.0) ** gamma)*255
                 else:
                     print('Lỗi: way=="SquareTransfrom"'+\
@@ -71,8 +73,45 @@ ngược lại với γ>1, ảnh sẽ được giảm sáng."""
                           ' hoặc way=="Gamma_Correction"')
                     return None
         return plllt.plllt(img=img, equ=equ)
+    def Filttter(
+        self,
+        way='AveragingKernel',
+        ):
+        img = cv2.imread(self.anh, cv2.IMREAD_COLOR)
+        img = plllt.convertcolor(img)
+        if way=='Bluuur':
+            equ = cv2.blur(img, (7, 7), 0)
+            equ_ = cv2.GaussianBlur(img, (9, 9), 0)#None 
+            equ__ = cv2.medianBlur(img, 9)#None
+            return plllt.plllt(
+                img=img,
+                equ=equ,
+                equ_=equ_,
+                equ__=equ__,
+                )
+        elif way=='ConvertScaleAbs':
+            print("""𝑔(𝑖,𝑗)=𝛼⋅𝑓(𝑖,𝑗)+𝛽""")
+            equ = cv2.convertScaleAbs(img, 1.1, 5)
+            return plllt.plllt(img=img, equ=equ)
+        elif way=='AveragingKernel':
+            kernel = np.ones((5,5),np.float32)/25
+        elif way=='SharpeningKernel':
+            kernel = np.array([[-1,-1,-1],
+                               [-1, 9,-1],
+                               [-1,-1,-1]])
+        else:
+            print('Lỗi: way=="Bluuur"'+\
+                  ' hoặc way=="AveragingKernel"'+\
+                  ' hoặc way=="ConvertScaleAbs"'+\
+                  ' hoặc way=="SharpeningKernel"')
+            return None
+        equ = cv2.filter2D(img, -1, kernel)
+        return plllt.plllt(img=img, equ=equ)
 
 s = XulyanhBangHistogram()
 ##s.changeByEachPixcel(way='SquareTransfrom')
 ##s.changeByEachPixcel(way='SquareRootTransfrom')
 ##s.changeByEachPixcel(way='Gamma_Correction')
+##s.equalizeHiiist()
+##s.equalizeHistEachParrrt()
+s.Filttter(way='ConvertScaleAbs')
