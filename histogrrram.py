@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlllib import plllt
 
 class XulyanhBangHistogram():
     def __init__(
@@ -38,13 +39,19 @@ class XulyanhBangHistogram():
     def equalizeHiiist(self):
         img = cv2.imread(self.anh, cv2.IMREAD_GRAYSCALE)
         equ = cv2.equalizeHist(img)
-        return self.plllt(img, equ)
+        return plllt.plllt(img=img, equ=equ)
     def equalizeHistEachParrrt(self):
         img = cv2.imread(self.anh, cv2.IMREAD_GRAYSCALE)
         clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8,8))
         equ = clahe.apply(img)
-        return self.plllt(img, equ)
-    def equalizeHistEachPixcel(self, way='SquareTransfrom'):
+        return plllt.plllt(img=img, equ=equ)
+    def changeByEachPixcel(self,
+                           way='SquareTransfrom',
+                           gamma=5,#0.04-25
+                           ):
+        """Với γ<1, các cùng ảnh ban đầu bị tối sẽ được tăng sáng và
+histogram sẽ có xu hướng dịch chuyển sang phải,
+ngược lại với γ>1, ảnh sẽ được giảm sáng."""
         img = cv2.imread(self.anh, cv2.IMREAD_GRAYSCALE)
         equ = img.copy()
         for i in range(img.shape[0]):
@@ -56,21 +63,16 @@ class XulyanhBangHistogram():
                     equ[i][j] = int(np.square(int(equ[i][j]))/255)
                 elif way=='SquareRootTransfrom':
                     equ[i][j] = int(np.sqrt(int(equ[i][j])))
+                elif way=='Gamma_Correction':
+                    equ[i][j] = ((int(img[i][j])/255.0) ** gamma)*255
                 else:
-                    print('Lỗi: "SquareTransfrom" hoặc "SquareRootTransfrom"')
+                    print('Lỗi: way=="SquareTransfrom"'+\
+                          ' hoặc way=="SquareRootTransfrom"'+\
+                          ' hoặc way=="Gamma_Correction"')
                     return None
-        return self.plllt(img, equ)
-    def plllt(self, img, equ):
-        plt.subplot(2,2,1)
-        plt.imshow(img, cmap='gray')
-        plt.subplot(2,2,2)
-        plt.hist(img.ravel(),256,[0,256])
-        plt.subplot(2,2,3)
-        plt.imshow(equ, cmap='gray')
-        plt.subplot(2,2,4)
-        plt.hist(equ.ravel(),256,[0,256])
-        plt.show()
+        return plllt.plllt(img=img, equ=equ)
 
 s = XulyanhBangHistogram()
-##s.equalizeHistEachPixcel(way='SquareTransfrom')
-s.equalizeHistEachPixcel(way='SquareRootTransfrom')
+##s.changeByEachPixcel(way='SquareTransfrom')
+##s.changeByEachPixcel(way='SquareRootTransfrom')
+##s.changeByEachPixcel(way='Gamma_Correction')
