@@ -47,7 +47,7 @@ class XulyanhBangHistogram():
         return plllt.plllt(img=img, equ=equ)
     def changeByEachPixcel(self,
                            way='SquareTransfrom',
-                           gamma=5,#0.04-25
+                           gamma=5,#
                            ):
         img = cv2.imread(self.anh, cv2.IMREAD_GRAYSCALE)
         equ = img.copy()
@@ -66,10 +66,15 @@ class XulyanhBangHistogram():
 histogram sẽ có xu hướng dịch chuyển sang phải,
 ngược lại với γ>1, ảnh sẽ được giảm sáng."""
                         )
-                    equ[i][j] = ((int(img[i][j])/255.0) ** gamma)*255
+                    equ[i][j] = (
+                        (int(img[i][j])/255.0)**gamma
+                        )*255#gamma=0.04-25
+                elif way=='ToBinaryImg':
+                    equ[i][j] = 0 if img[i][j]<gamma else 255#gamma=100
                 else:
                     print('Lỗi: way=="SquareTransfrom"'+\
                           ' hoặc way=="SquareRootTransfrom"'+\
+                          ' hoặc way=="ToBinaryImg"'+\
                           ' hoặc way=="Gamma_Correction"')
                     return None
         return plllt.plllt(img=img, equ=equ)

@@ -9,3 +9,5 @@ nguyên lý hoạt động: tách phần âm thanh của video ra, sau đó uplo
 youtube-dl YouTube-(or-other-website)-video-link
 autosub [tên_video] -S vi -D vi#ubuntu
 python autosub_app.py [tên_video] -S vi -D vi#window
+##########################################################################################################################################################################################
+sudo docker build --tag autosub:latest .

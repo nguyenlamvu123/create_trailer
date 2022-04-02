@@ -18,9 +18,9 @@ RUN apt-get install -y python3-pip python3-dev
 RUN pip3 install --upgrade pip
 
 RUN apt install -y ffmpeg
-RUN apt-get -y install curl
-RUN curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl
-RUN chmod a+rx /usr/local/bin/youtube-dl
+#RUN apt-get -y install curl
+#RUN curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl
+#RUN chmod a+rx /usr/local/bin/youtube-dl
 
 # set work directory
 WORKDIR /usr/src/app
@@ -30,7 +30,7 @@ WORKDIR /usr/src/app
 #RUN python3 -m pip install --upgrade pip 
 #COPY ./requirements.txt /usr/src/app
 #RUN python3 -m pip install -r requirements.txt
-RUN apt-get install -y git
+#RUN apt-get install -y git
 RUN python3 -m pip install git+https://github.com/agermanidis/autosub.git
 
 # copy project
