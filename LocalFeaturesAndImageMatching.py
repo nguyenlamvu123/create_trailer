@@ -95,25 +95,52 @@ class LocalFeatures():
 class ImageMatching:
     def __init__(
         self,
-        anh1=cv2.imread('/media/zaibachkhoa/code1/cv3/05/panorama/mountain3_left.png'),
-        anh2=cv2.imread('/media/zaibachkhoa/code1/cv3/05/panorama/mountain3_right.png'),
+        anh1=cv2.imread('/media/zaibachkhoa/code/cv3/05(ImageMatching)/panorama/mountain3_left.png'),
+        anh2=cv2.imread('/media/zaibachkhoa/code/cv3/05(ImageMatching)/panorama/mountain3_right.png'),
+        duongdan='/media/zaibachkhoa/1cbf4a7c-2833-4170-8d80-64a4ef0be8b6/home/v/Pictures/hình ảnh/hòa bình 07042022/0',
         ):
         self.anh1 = anh1
         self.anh2 = anh2
+        self.duongdan = duongdan 
     def stitching(
         self,
-        anh1=None, anh2=None,
+        anh1=None, anh2=None, duongggdan=False, savvve=True,
         ):
-        if anh1 is None and anh2 is None:
+        stitcher = cv2.createStitcher(False)
+        
+        if anh1 is None and anh2 is None and not duongggdan:
             anh1 = self.anh1
             anh2 = self.anh2
-        stitcher = cv2.createStitcher(False)
-        result = stitcher.stitch((anh1, anh2))
-        return plllt.plllt(
-            img=anh1,
-            equ=anh2,
-            equ_=result[1],
-            )
+            result = stitcher.stitch((anh1, anh2))
+            return plllt.plllt(
+                img=anh1,
+                equ=anh2,
+                equ_=result[1],
+                )
+        else:
+            import os
+            lissst = []
+            for anh in os.listdir(self.duongdan):
+                lissst.append(
+                    cv2.imread(
+                        os.path.join(
+                            self.duongdan,
+                            anh,
+                            )
+                        )
+                    )
+            tuppple = tuple(lissst)
+            result = stitcher.stitch(tuppple)
+            if savvve:
+                return plt.imsave(
+                    os.path.join(
+                        self.duongdan,
+                        'toancanh.jpg',
+                        ),
+                    result[1]
+                    )
+            plt.imshow(result[1])
+            return plt.show()
     def detectAndDescribe(
         self,
         image,
@@ -216,6 +243,6 @@ s = LocalFeatures(
     )
 ##s.detect_corner();print(s.detect_corner.__doc__)
 ##s.oriented_gradients();print(s.oriented_gradients.__doc__)
-s.Scale_Invariant(way='surf');print(s.Scale_Invariant.__doc__)
-##s = ImageMatching()
-##s.stitching()
+##s.Scale_Invariant(way='surf');print(s.Scale_Invariant.__doc__)
+s = ImageMatching()
+s.stitching(duongggdan=True)
